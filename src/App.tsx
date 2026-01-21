@@ -51,6 +51,28 @@ function App() {
     fetchUser()
   }, [])
 
+  useEffect(() => {
+    if (consultantsList.length > 0) {
+      const needsUpdate = consultantsList.some(c => !c.email.endsWith('@microsoft.com'))
+      if (needsUpdate) {
+        setConsultants(current => {
+          const list = current || []
+          return list.map(consultant => {
+            if (!consultant.email.endsWith('@microsoft.com')) {
+              const username = consultant.email.split('@')[0]
+              return {
+                ...consultant,
+                email: `${username}@microsoft.com`
+              }
+            }
+            return consultant
+          })
+        })
+        toast.success("All consultant emails updated to @microsoft.com")
+      }
+    }
+  }, [])
+
   const handleSaveConsultant = (consultant: Consultant) => {
     setConsultants(current => {
       const list = current || []
