@@ -61,6 +61,9 @@ export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentPr
       <Card>
         <CardHeader>
           <CardTitle>Assessment Form</CardTitle>
+          <p className="text-sm text-muted-foreground mt-2">
+            Please review your Capabilities Profile and adjust your expertise level accordingly as needed.
+          </p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
