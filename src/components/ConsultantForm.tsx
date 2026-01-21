@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Consultant, SOLUTION_PLAYS, SolutionPlayData, INDUSTRIES, Industry } from "@/lib/types"
+import { Consultant, SOLUTION_PLAYS, SolutionPlayData, INDUSTRIES, Industry, REGIONS, Region } from "@/lib/types"
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
     name: "",
     email: "",
     industries: [],
+    region: undefined,
     solutionPlays: {},
   })
   const [selectedIndustry, setSelectedIndustry] = useState<string>("")
@@ -41,6 +42,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
         name: "",
         email: "",
         industries: [],
+        region: undefined,
         solutionPlays: {},
       })
     }
@@ -121,6 +123,21 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                     required
                     placeholder="john.doe@company.com"
                   />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="region">Region</Label>
+                  <select
+                    id="region"
+                    value={formData.region || ""}
+                    onChange={(e) => setFormData({ ...formData, region: e.target.value as Region || undefined })}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">Select a region...</option>
+                    {REGIONS.map(region => (
+                      <option key={region} value={region}>{region}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="grid gap-2">

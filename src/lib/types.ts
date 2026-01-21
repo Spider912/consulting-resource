@@ -30,8 +30,15 @@ export const INDUSTRIES = [
   "Defense"
 ] as const
 
+export const REGIONS = [
+  "Americas",
+  "EMEA",
+  "Asia"
+] as const
+
 export type SolutionPlay = typeof SOLUTION_PLAYS[number]
 export type Industry = typeof INDUSTRIES[number]
+export type Region = typeof REGIONS[number]
 
 export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 
@@ -49,6 +56,7 @@ export interface Consultant {
   email: string
   avatar?: string
   industries?: Industry[]
+  region?: Region
   solutionPlays: Record<string, SolutionPlayData>
 }
 

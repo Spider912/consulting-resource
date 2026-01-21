@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useKV } from "@github/spark/hooks"
-import { Consultant, Industry, INDUSTRIES } from "@/lib/types"
+import { Consultant, Industry, INDUSTRIES, Region, REGIONS } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -27,7 +27,9 @@ function App() {
   const [editingConsultant, setEditingConsultant] = useState<Consultant | undefined>()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedIndustries, setSelectedIndustries] = useState<Industry[]>([])
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [selectedRegions, setSelectedRegions] = useState<Region[]>([])
+  const [isIndustryFilterOpen, setIsIndustryFilterOpen] = useState(false)
+  const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false)
 
   const consultantsList = consultants || []
 
@@ -75,6 +77,18 @@ function App() {
     setSelectedIndustries([])
   }
 
+  const toggleRegionFilter = (region: Region) => {
+    setSelectedRegions(prev =>
+      prev.includes(region)
+        ? prev.filter(r => r !== region)
+        : [...prev, region]
+    )
+  }
+
+  const clearRegionFilters = () => {
+    setSelectedRegions([])
+  }
+
   const filteredConsultants = consultantsList.filter(consultant => {
     const matchesSearch =
       consultant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -85,7 +99,11 @@ function App() {
       (consultant.industries &&
         selectedIndustries.some(industry => consultant.industries?.includes(industry)))
 
-    return matchesSearch && matchesIndustry
+    const matchesRegion =
+      selectedRegions.length === 0 ||
+      (consultant.region && selectedRegions.includes(consultant.region))
+
+    return matchesSearch && matchesIndustry && matchesRegion
   })
 
   return (
@@ -133,7 +151,7 @@ function App() {
                 />
               </div>
 
-              <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+              <Popover open={isIndustryFilterOpen} onOpenChange={setIsIndustryFilterOpen}>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="gap-2">
                     <Funnel className="h-4 w-4" />
@@ -181,12 +199,60 @@ function App() {
                 </PopoverContent>
               </Popover>
 
+              <Popover open={isRegionFilterOpen} onOpenChange={setIsRegionFilterOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <Funnel className="h-4 w-4" />
+                    Region
+                    {selectedRegions.length > 0 && (
+                      <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center rounded-full">
+                        {selectedRegions.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64" align="start">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-sm">Filter by Region</h4>
+                      {selectedRegions.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearRegionFilters}
+                          className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear all
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {REGIONS.map((region) => (
+                        <div key={region} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`region-${region}`}
+                            checked={selectedRegions.includes(region)}
+                            onCheckedChange={() => toggleRegionFilter(region)}
+                          />
+                          <Label
+                            htmlFor={`region-${region}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {region}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
               <div className="text-sm text-muted-foreground">
                 {filteredConsultants.length} of {consultantsList.length} consultants
               </div>
             </div>
 
-            {selectedIndustries.length > 0 && (
+            {(selectedIndustries.length > 0 || selectedRegions.length > 0) && (
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm text-muted-foreground">Active filters:</span>
                 {selectedIndustries.map((industry) => (
@@ -197,6 +263,19 @@ function App() {
                       size="icon"
                       className="h-4 w-4 p-0 hover:bg-transparent"
                       onClick={() => toggleIndustryFilter(industry)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))}
+                {selectedRegions.map((region) => (
+                  <Badge key={region} variant="secondary" className="gap-1 pl-3 pr-2">
+                    {region}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-4 w-4 p-0 hover:bg-transparent"
+                      onClick={() => toggleRegionFilter(region)}
                     >
                       <X className="h-3 w-3" />
                     </Button>
