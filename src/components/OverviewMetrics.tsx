@@ -53,66 +53,66 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
   const metrics = [
     {
       title: "Total Consultants",
-      value: totalConsultants > 0 ? totalConsultants : "—",
+      value: totalConsultants > 1 ? totalConsultants : 1,
       icon: Users,
       color: "text-blue-500"
     },
     {
       title: "Total Hours Delivered",
-      value: totalHours > 0 ? totalHours.toLocaleString() : "—",
+      value: totalHours > 1 ? totalHours.toLocaleString() : 1,
       icon: Clock,
       color: "text-accent"
     },
     {
       title: "Pre-Sales Hours",
-      value: totalPreSalesHours > 0 ? totalPreSalesHours.toLocaleString() : "—",
+      value: totalPreSalesHours > 1 ? totalPreSalesHours.toLocaleString() : 1,
       icon: Presentation,
       color: "text-purple-500"
     },
     {
       title: "Articles Posted",
-      value: totalArticles > 0 ? totalArticles.toLocaleString() : "—",
+      value: totalArticles > 1 ? totalArticles.toLocaleString() : 1,
       icon: Article,
       color: "text-orange-500"
     },
     {
       title: "Certifications",
-      value: totalCertifications > 0 ? totalCertifications.toLocaleString() : "—",
+      value: totalCertifications > 1 ? totalCertifications.toLocaleString() : 1,
       icon: Certificate,
       color: "text-cyan-500"
     },
     {
       title: "Training Completed",
-      value: totalTraining > 0 ? totalTraining.toLocaleString() : "—",
+      value: totalTraining > 1 ? totalTraining.toLocaleString() : 1,
       icon: GraduationCap,
       color: "text-primary"
     },
     {
       title: "Leader Level Consultants",
-      value: leaderConsultants > 0 ? leaderConsultants : "—",
+      value: leaderConsultants > 1 ? leaderConsultants : 1,
       icon: Trophy,
       color: "text-emerald-500"
     }
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
       {metrics.map((metric) => {
         const Icon = metric.icon
         return (
-          <Card key={metric.title} className="hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
-            <CardHeader className="pb-2">
+          <Card key={metric.title} className="hover:shadow-md transition-all duration-200">
+            <CardHeader className="pb-1 pt-3 px-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {metric.title}
-                </CardTitle>
-                <Icon className={`h-5 w-5 ${metric.color}`} weight="duotone" />
+                <Icon className={`h-4 w-4 ${metric.color}`} weight="duotone" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className={`font-mono text-3xl font-bold ${metric.color}`}>
+            <CardContent className="px-3 pb-3">
+              <div className={`font-mono text-xl font-bold ${metric.color} mb-1`}>
                 {metric.value}
               </div>
+              <CardTitle className="text-xs font-medium text-muted-foreground leading-tight">
+                {metric.title}
+              </CardTitle>
             </CardContent>
           </Card>
         )
