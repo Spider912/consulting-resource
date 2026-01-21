@@ -25,7 +25,7 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
 
   const totalPreSalesHours = 527
 
-  const totalArticles = 110
+  const totalArticles = 7
 
   const totalCertifications = 27
 
