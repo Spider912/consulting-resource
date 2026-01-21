@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useKV } from "@github/spark/hooks"
-import { Consultant, Industry, INDUSTRIES, Region, REGIONS, SOLUTION_PLAYS, SolutionPlay, SOLUTION_AREAS, SolutionArea } from "@/lib/types"
+import { Consultant, Industry, INDUSTRIES, Region, REGIONS, SOLUTION_PLAYS, SolutionPlay, SOLUTION_AREAS, SolutionArea, SeniorityLevel, SENIORITY_LEVELS } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -31,10 +31,12 @@ function App() {
   const [selectedRegions, setSelectedRegions] = useState<Region[]>([])
   const [selectedSolutionPlays, setSelectedSolutionPlays] = useState<SolutionPlay[]>([])
   const [selectedSolutionAreas, setSelectedSolutionAreas] = useState<SolutionArea[]>([])
+  const [selectedSeniorityLevels, setSelectedSeniorityLevels] = useState<SeniorityLevel[]>([])
   const [isIndustryFilterOpen, setIsIndustryFilterOpen] = useState(false)
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false)
   const [isSolutionPlayFilterOpen, setIsSolutionPlayFilterOpen] = useState(false)
   const [isSolutionAreaFilterOpen, setIsSolutionAreaFilterOpen] = useState(false)
+  const [isSeniorityLevelFilterOpen, setIsSeniorityLevelFilterOpen] = useState(false)
   const [user, setUser] = useState<{ login: string; avatarUrl: string; email: string } | null>(null)
 
   const consultantsList = consultants || []
@@ -167,6 +169,18 @@ function App() {
     setSelectedSolutionAreas([])
   }
 
+  const toggleSeniorityLevelFilter = (level: SeniorityLevel) => {
+    setSelectedSeniorityLevels(prev =>
+      prev.includes(level)
+        ? prev.filter(l => l !== level)
+        : [...prev, level]
+    )
+  }
+
+  const clearSeniorityLevelFilters = () => {
+    setSelectedSeniorityLevels([])
+  }
+
   const filteredConsultants = consultantsList.filter(consultant => {
     const matchesSearch =
       consultant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -222,7 +236,11 @@ function App() {
         )
       })
 
-    return matchesSearch && matchesIndustry && matchesRegion && matchesSolutionPlay && matchesSolutionArea
+    const matchesSeniorityLevel =
+      selectedSeniorityLevels.length === 0 ||
+      (consultant.seniorityLevel && selectedSeniorityLevels.includes(consultant.seniorityLevel))
+
+    return matchesSearch && matchesIndustry && matchesRegion && matchesSolutionPlay && matchesSolutionArea && matchesSeniorityLevel
   })
 
   return (
@@ -472,12 +490,60 @@ function App() {
                 </PopoverContent>
               </Popover>
 
+              <Popover open={isSeniorityLevelFilterOpen} onOpenChange={setIsSeniorityLevelFilterOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <Funnel className="h-4 w-4" />
+                    Seniority Level
+                    {selectedSeniorityLevels.length > 0 && (
+                      <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center rounded-full">
+                        {selectedSeniorityLevels.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64" align="start">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-sm">Filter by Seniority Level</h4>
+                      {selectedSeniorityLevels.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearSeniorityLevelFilters}
+                          className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear all
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {SENIORITY_LEVELS.map((level) => (
+                        <div key={level} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`level-${level}`}
+                            checked={selectedSeniorityLevels.includes(level)}
+                            onCheckedChange={() => toggleSeniorityLevelFilter(level)}
+                          />
+                          <Label
+                            htmlFor={`level-${level}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {level}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
               <div className="text-sm text-muted-foreground">
                 {filteredConsultants.length} of {consultantsList.length} consultants
               </div>
             </div>
 
-            {(selectedIndustries.length > 0 || selectedRegions.length > 0 || selectedSolutionPlays.length > 0 || selectedSolutionAreas.length > 0) && (
+            {(selectedIndustries.length > 0 || selectedRegions.length > 0 || selectedSolutionPlays.length > 0 || selectedSolutionAreas.length > 0 || selectedSeniorityLevels.length > 0) && (
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm text-muted-foreground">Active filters:</span>
                 {selectedIndustries.map((industry) => (
@@ -527,6 +593,19 @@ function App() {
                       size="icon"
                       className="h-4 w-4 p-0 hover:bg-transparent"
                       onClick={() => toggleSolutionAreaFilter(area)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))}
+                {selectedSeniorityLevels.map((level) => (
+                  <Badge key={level} variant="secondary" className="gap-1 pl-3 pr-2">
+                    {level}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-4 w-4 p-0 hover:bg-transparent"
+                      onClick={() => toggleSeniorityLevelFilter(level)}
                     >
                       <X className="h-3 w-3" />
                     </Button>
