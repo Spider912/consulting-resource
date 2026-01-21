@@ -40,6 +40,13 @@ This dashboard aggregates multiple data sources (training records, delivery hour
 - **Progression**: Enter search/filter criteria → Results update in real-time → Filtered consultants display in matrix and lists → Clear filters to return to full view
 - **Success criteria**: Search responds instantly (<100ms), supports multiple filter combinations, and clearly indicates active filters
 
+### Hours Submission Form
+- **Functionality**: Structured form for team members to submit their solution area assignment, implemented solution plays, and hours delivered
+- **Purpose**: Enable consultants to self-report their work and capabilities, streamlining data collection for resource managers
+- **Trigger**: User clicks "Submit Hours" button in Capabilities Assessment tab
+- **Progression**: Click Submit Hours → Modal form opens → Enter team member name → Select solution area (AI Business Solutions, Cloud & AI Platforms, or Security) → Choose specific solution play from filtered list → Select hours range (0-100/Apprentice, 101-500/Contributor, 501+/Leader) → Optionally enter exact hours and additional notes → Submit → Confirmation toast appears
+- **Success criteria**: Form validates required fields, solution plays filter based on selected area, submission records successfully, and provides clear feedback to user
+
 ## Edge Case Handling
 
 - **No Consultants Added**: Display helpful empty state with call-to-action to add first consultant

@@ -2,7 +2,7 @@ import { Consultant, SOLUTION_PLAYS, getSkillLevel, SkillLevel } from "@/lib/typ
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Target, TrendUp, Users } from "@phosphor-icons/react"
+import { Target, TrendUp, Users, Plus } from "@phosphor-icons/react"
 import {
   Select,
   SelectContent,
@@ -11,6 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { HoursSubmissionForm } from "./HoursSubmissionForm"
 
 interface CapabilitiesAssessmentProps {
   consultants: Consultant[]
@@ -27,6 +29,7 @@ interface CapabilityGap {
 
 export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentProps) {
   const [selectedPlay, setSelectedPlay] = useState<string>("all")
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
   const getInitials = (name: string) => {
     return name
@@ -96,6 +99,19 @@ export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentPr
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold">Capabilities Assessment</h2>
+          <p className="text-muted-foreground text-sm mt-1">
+            Track team capabilities and submit solution play hours
+          </p>
+        </div>
+        <Button onClick={() => setIsFormOpen(true)} size="lg" className="gap-2">
+          <Plus className="h-5 w-5" />
+          Submit Hours
+        </Button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-3">
@@ -302,6 +318,12 @@ export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentPr
           </CardContent>
         </Card>
       )}
+
+      <HoursSubmissionForm
+        open={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        consultants={consultants}
+      />
     </div>
   )
 }
