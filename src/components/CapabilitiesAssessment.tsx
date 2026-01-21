@@ -29,7 +29,14 @@ export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentPr
     if (selectedConsultant) {
       const initialLevels: Record<string, SkillLevel> = {}
       SOLUTION_PLAYS.forEach(play => {
-        initialLevels[play] = "Apprentice"
+        const deliveredHours = selectedConsultant.solutionPlays[play]?.hoursDelivered || 0
+        if (deliveredHours >= 500) {
+          initialLevels[play] = "Leader"
+        } else if (deliveredHours >= 200) {
+          initialLevels[play] = "Contributor"
+        } else {
+          initialLevels[play] = "Apprentice"
+        }
       })
       setExpertiseLevels(initialLevels)
     }
