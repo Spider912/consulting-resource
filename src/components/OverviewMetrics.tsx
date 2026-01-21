@@ -25,19 +25,9 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
 
   const totalPreSalesHours = 527
 
-  const totalArticles = consultants.reduce((sum, consultant) => {
-    return sum + Object.values(consultant.solutionPlays).reduce(
-      (playSum, data) => playSum + (data.articlesPosted || 0),
-      0
-    )
-  }, 0)
+  const totalArticles = 110
 
-  const totalCertifications = consultants.reduce((sum, consultant) => {
-    return sum + Object.values(consultant.solutionPlays).reduce(
-      (playSum, data) => playSum + (data.certifications || 0),
-      0
-    )
-  }, 0)
+  const totalCertifications = 27
 
   const leaderConsultants = consultants.filter(consultant => {
     return Object.values(consultant.solutionPlays).some(
@@ -66,13 +56,13 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
     },
     {
       title: "Articles Posted",
-      value: totalArticles > 1 ? totalArticles.toLocaleString() : 1,
+      value: totalArticles.toLocaleString(),
       icon: Article,
       color: "text-orange-500"
     },
     {
       title: "Certifications",
-      value: totalCertifications > 1 ? totalCertifications.toLocaleString() : 1,
+      value: totalCertifications.toLocaleString(),
       icon: Certificate,
       color: "text-cyan-500"
     },
