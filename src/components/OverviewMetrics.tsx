@@ -1,6 +1,6 @@
 import { Consultant, getSkillLevel } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Clock, GraduationCap, Trophy, Presentation, Article, Certificate } from "@phosphor-icons/react"
+import { Users, Clock, GraduationCap, Trophy, Presentation, Article, Certificate, Database } from "@phosphor-icons/react"
 
 interface OverviewMetricsProps {
   consultants: Consultant[]
@@ -92,6 +92,12 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
       value: leaderConsultants > 1 ? leaderConsultants : 1,
       icon: Trophy,
       color: "text-emerald-500"
+    },
+    {
+      title: "Future Data Source",
+      value: "—",
+      icon: Database,
+      color: "text-slate-500"
     }
   ]
 
