@@ -1,9 +1,9 @@
 import { Consultant } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { useState } from "react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState, useEffect } from "react"
 
 interface CapabilitiesAssessmentProps {
   consultants: Consultant[]
@@ -12,6 +12,12 @@ interface CapabilitiesAssessmentProps {
 export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentProps) {
   const [teamMemberName, setTeamMemberName] = useState("")
   const [solutionArea, setSolutionArea] = useState("")
+
+  useEffect(() => {
+    if (consultants.length > 0 && !teamMemberName) {
+      setTeamMemberName(consultants[0].name)
+    }
+  }, [consultants, teamMemberName])
 
   return (
     <div className="space-y-6 max-w-3xl">
@@ -31,12 +37,18 @@ export function CapabilitiesAssessment({ consultants }: CapabilitiesAssessmentPr
             <Label htmlFor="team-member-name">
               Question 1: Team Member Name
             </Label>
-            <Input
-              id="team-member-name"
-              placeholder="Enter team member name"
-              value={teamMemberName}
-              onChange={(e) => setTeamMemberName(e.target.value)}
-            />
+            <Select value={teamMemberName} onValueChange={setTeamMemberName}>
+              <SelectTrigger id="team-member-name">
+                <SelectValue placeholder="Select team member" />
+              </SelectTrigger>
+              <SelectContent>
+                {consultants.map((consultant) => (
+                  <SelectItem key={consultant.id} value={consultant.name}>
+                    {consultant.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-3">
