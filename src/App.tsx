@@ -9,6 +9,7 @@ import { ConsultantForm } from "@/components/ConsultantForm"
 import { SkillsMatrix } from "@/components/SkillsMatrix"
 import { AnalyticsView } from "@/components/AnalyticsView"
 import { OverviewMetrics } from "@/components/OverviewMetrics"
+import { CapabilitiesAssessment } from "@/components/CapabilitiesAssessment"
 import { Plus, MagnifyingGlass, ChartBar, Funnel, X } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
@@ -111,8 +112,9 @@ function App() {
 
       <div className="container mx-auto px-6 py-6">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-3">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="capabilities">Capabilities Assessment</TabsTrigger>
             <TabsTrigger value="matrix">Skills Matrix</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
@@ -233,6 +235,10 @@ function App() {
                 ))}
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="capabilities">
+            <CapabilitiesAssessment consultants={consultantsList} />
           </TabsContent>
 
           <TabsContent value="matrix">
