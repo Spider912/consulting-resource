@@ -114,9 +114,9 @@ function App() {
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full max-w-2xl grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="capabilities">Capabilities Assessment</TabsTrigger>
             <TabsTrigger value="matrix">Skills Matrix</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="capabilities">Capabilities Assessment</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -237,16 +237,16 @@ function App() {
             )}
           </TabsContent>
 
-          <TabsContent value="capabilities">
-            <CapabilitiesAssessment consultants={consultantsList} />
-          </TabsContent>
-
           <TabsContent value="matrix">
             <SkillsMatrix consultants={consultantsList} />
           </TabsContent>
 
           <TabsContent value="analytics">
             <AnalyticsView consultants={consultantsList} />
+          </TabsContent>
+
+          <TabsContent value="capabilities">
+            <CapabilitiesAssessment consultants={consultantsList} />
           </TabsContent>
         </Tabs>
       </div>
