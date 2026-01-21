@@ -96,21 +96,21 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
   ]
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {metrics.map((metric) => {
         const Icon = metric.icon
         return (
           <Card key={metric.title} className="hover:shadow-md transition-all duration-200">
-            <CardHeader className="pb-1 pt-3 px-3">
+            <CardHeader className="pb-2 pt-5 px-5">
               <div className="flex items-center justify-between">
-                <Icon className={`h-4 w-4 ${metric.color}`} weight="duotone" />
+                <Icon className={`h-6 w-6 ${metric.color}`} weight="duotone" />
               </div>
             </CardHeader>
-            <CardContent className="px-3 pb-3">
-              <div className={`font-mono text-xl font-bold ${metric.color} mb-1`}>
+            <CardContent className="px-5 pb-5">
+              <div className={`font-mono text-3xl font-bold ${metric.color} mb-2`}>
                 {metric.value}
               </div>
-              <CardTitle className="text-xs font-medium text-muted-foreground leading-tight">
+              <CardTitle className="text-sm font-medium text-muted-foreground leading-tight">
                 {metric.title}
               </CardTitle>
             </CardContent>
