@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useKV } from "@github/spark/hooks"
 import { Consultant, Industry, INDUSTRIES, Region, REGIONS, SOLUTION_PLAYS } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
 function App() {
   const [consultants, setConsultants] = useKV<Consultant[]>("consultants", [])
@@ -30,8 +31,21 @@ function App() {
   const [selectedRegions, setSelectedRegions] = useState<Region[]>([])
   const [isIndustryFilterOpen, setIsIndustryFilterOpen] = useState(false)
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false)
+  const [user, setUser] = useState<{ login: string; avatarUrl: string; email: string } | null>(null)
 
   const consultantsList = consultants || []
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await window.spark.user()
+        setUser(userData)
+      } catch (error) {
+        console.error("Error fetching user:", error)
+      }
+    }
+    fetchUser()
+  }, [])
 
   const handleSaveConsultant = (consultant: Consultant) => {
     setConsultants(current => {
@@ -121,6 +135,18 @@ function App() {
               </p>
             </div>
             <div className="flex items-center gap-3">
+              {user && (
+                <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-muted/50">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.avatarUrl} alt={user.login} />
+                    <AvatarFallback>{user.login.charAt(0).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold">{user.login}</span>
+                    <span className="text-xs text-muted-foreground">{user.email}</span>
+                  </div>
+                </div>
+              )}
               <Button onClick={handleAddNew} size="lg" className="gap-2">
                 <Plus className="h-5 w-5" />
                 Add Consultant
