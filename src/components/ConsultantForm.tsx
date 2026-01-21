@@ -123,7 +123,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    placeholder="john.doe@company.com"
+                    placeholder="john.doe@microsoft.com"
                   />
                 </div>
 
