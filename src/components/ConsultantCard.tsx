@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Pencil, Trash, Briefcase, GlobeHemisphereWest } from "@phosphor-icons/react"
+import { Pencil, Trash, Briefcase, GlobeHemisphereWest, ChartLineUp } from "@phosphor-icons/react"
 import { getSkillLevelColor } from "@/lib/types"
 
 interface ConsultantCardProps {
@@ -79,6 +79,18 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
             <span className="text-sm font-medium">Total Hours Delivered</span>
             <span className="font-mono text-2xl font-bold text-primary">{totalHours}</span>
           </div>
+
+          {consultant.seniorityLevel && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <ChartLineUp className="h-4 w-4 text-muted-foreground" weight="duotone" />
+                <span className="text-sm font-medium">Seniority Level</span>
+              </div>
+              <Badge variant="default" className="text-xs font-semibold bg-accent text-accent-foreground">
+                {consultant.seniorityLevel}
+              </Badge>
+            </div>
+          )}
 
           {consultant.region && (
             <div>

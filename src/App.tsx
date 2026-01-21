@@ -54,21 +54,35 @@ function App() {
   useEffect(() => {
     if (consultantsList.length > 0) {
       const needsUpdate = consultantsList.some(c => !c.email.endsWith('@microsoft.com'))
-      if (needsUpdate) {
+      const needsSeniorityLevel = consultantsList.some(c => !c.seniorityLevel)
+      
+      if (needsUpdate || needsSeniorityLevel) {
         setConsultants(current => {
           const list = current || []
           return list.map(consultant => {
+            const updates: Partial<Consultant> = {}
+            
             if (!consultant.email.endsWith('@microsoft.com')) {
               const username = consultant.email.split('@')[0]
-              return {
-                ...consultant,
-                email: `${username}@microsoft.com`
-              }
+              updates.email = `${username}@microsoft.com`
             }
-            return consultant
+            
+            if (!consultant.seniorityLevel) {
+              updates.seniorityLevel = "Level 62"
+            }
+            
+            return Object.keys(updates).length > 0 
+              ? { ...consultant, ...updates }
+              : consultant
           })
         })
-        toast.success("All consultant emails updated to @microsoft.com")
+        
+        if (needsUpdate) {
+          toast.success("All consultant emails updated to @microsoft.com")
+        }
+        if (needsSeniorityLevel) {
+          toast.success("Seniority levels initialized for existing consultants")
+        }
       }
     }
   }, [])

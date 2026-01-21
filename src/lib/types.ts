@@ -42,10 +42,21 @@ export const SOLUTION_AREAS = [
   "Security"
 ] as const
 
+export const SENIORITY_LEVELS = [
+  "Level 60",
+  "Level 61",
+  "Level 62",
+  "Level 63",
+  "Level 64",
+  "Level 65",
+  "Level 66"
+] as const
+
 export type SolutionPlay = typeof SOLUTION_PLAYS[number]
 export type Industry = typeof INDUSTRIES[number]
 export type Region = typeof REGIONS[number]
 export type SolutionArea = typeof SOLUTION_AREAS[number]
+export type SeniorityLevel = typeof SENIORITY_LEVELS[number]
 
 export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 
@@ -65,6 +76,7 @@ export interface Consultant {
   industries?: Industry[]
   primaryIndustry?: Industry
   region?: Region
+  seniorityLevel?: SeniorityLevel
   solutionPlays: Record<string, SolutionPlayData>
 }
 
