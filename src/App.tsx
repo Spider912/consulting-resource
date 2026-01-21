@@ -147,10 +147,6 @@ function App() {
                   </div>
                 </div>
               )}
-              <Button onClick={handleAddNew} size="lg" className="gap-2">
-                <Plus className="h-5 w-5" />
-                Add Consultant
-              </Button>
             </div>
           </div>
         </div>
