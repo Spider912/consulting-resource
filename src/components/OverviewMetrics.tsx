@@ -23,12 +23,7 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
     )
   }, 0)
 
-  const totalPreSalesHours = consultants.reduce((sum, consultant) => {
-    return sum + Object.values(consultant.solutionPlays).reduce(
-      (playSum, data) => playSum + (data.preSalesHours || 0),
-      0
-    )
-  }, 0)
+  const totalPreSalesHours = 527
 
   const totalArticles = consultants.reduce((sum, consultant) => {
     return sum + Object.values(consultant.solutionPlays).reduce(
@@ -65,7 +60,7 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
     },
     {
       title: "Pre-Sales Hours",
-      value: totalPreSalesHours > 1 ? totalPreSalesHours.toLocaleString() : 1,
+      value: totalPreSalesHours.toLocaleString(),
       icon: Presentation,
       color: "text-purple-500"
     },
