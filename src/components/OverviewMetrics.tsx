@@ -53,43 +53,43 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
   const metrics = [
     {
       title: "Total Consultants",
-      value: totalConsultants,
+      value: totalConsultants > 0 ? totalConsultants : "—",
       icon: Users,
       color: "text-blue-500"
     },
     {
       title: "Total Hours Delivered",
-      value: totalHours.toLocaleString(),
+      value: totalHours > 0 ? totalHours.toLocaleString() : "—",
       icon: Clock,
       color: "text-accent"
     },
     {
       title: "Pre-Sales Hours",
-      value: totalPreSalesHours.toLocaleString(),
+      value: totalPreSalesHours > 0 ? totalPreSalesHours.toLocaleString() : "—",
       icon: Presentation,
       color: "text-purple-500"
     },
     {
       title: "Articles Posted",
-      value: totalArticles.toLocaleString(),
+      value: totalArticles > 0 ? totalArticles.toLocaleString() : "—",
       icon: Article,
       color: "text-orange-500"
     },
     {
       title: "Certifications",
-      value: totalCertifications.toLocaleString(),
+      value: totalCertifications > 0 ? totalCertifications.toLocaleString() : "—",
       icon: Certificate,
       color: "text-cyan-500"
     },
     {
       title: "Training Completed",
-      value: totalTraining.toLocaleString(),
+      value: totalTraining > 0 ? totalTraining.toLocaleString() : "—",
       icon: GraduationCap,
       color: "text-primary"
     },
     {
       title: "Leader Level Consultants",
-      value: leaderConsultants,
+      value: leaderConsultants > 0 ? leaderConsultants : "—",
       icon: Trophy,
       color: "text-emerald-500"
     }
