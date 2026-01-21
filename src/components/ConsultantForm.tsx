@@ -28,6 +28,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
     name: "",
     email: "",
     industries: [],
+    primaryIndustry: undefined,
     region: undefined,
     solutionPlays: {},
   })
@@ -42,6 +43,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
         name: "",
         email: "",
         industries: [],
+        primaryIndustry: undefined,
         region: undefined,
         solutionPlays: {},
       })
@@ -141,7 +143,22 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="industries">Industry Experience</Label>
+                  <Label htmlFor="primaryIndustry">Primary Industry Expertise</Label>
+                  <select
+                    id="primaryIndustry"
+                    value={formData.primaryIndustry || ""}
+                    onChange={(e) => setFormData({ ...formData, primaryIndustry: e.target.value as Industry || undefined })}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">Select primary industry...</option>
+                    {INDUSTRIES.map(industry => (
+                      <option key={industry} value={industry}>{industry}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="industries">Additional Industry Experience</Label>
                   <div className="flex gap-2">
                     <select
                       id="industries"

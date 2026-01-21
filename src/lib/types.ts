@@ -56,6 +56,7 @@ export interface Consultant {
   email: string
   avatar?: string
   industries?: Industry[]
+  primaryIndustry?: Industry
   region?: Region
   solutionPlays: Record<string, SolutionPlayData>
 }

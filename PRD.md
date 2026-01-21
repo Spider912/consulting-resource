@@ -13,11 +13,11 @@ This dashboard aggregates multiple data sources (training records, delivery hour
 ## Essential Features
 
 ### Consultant Profile Management
-- **Functionality**: Add, edit, and manage consultant profiles with their training and delivery data across 18 solution plays
-- **Purpose**: Maintain accurate records of team capabilities and track individual consultant growth
+- **Functionality**: Add, edit, and manage consultant profiles with their training and delivery data across 18 solution plays, including region, primary industry expertise, and additional industry experience
+- **Purpose**: Maintain accurate records of team capabilities, track individual consultant growth, and capture industry specializations for optimal client matching
 - **Trigger**: User clicks "Add Consultant" button or selects existing consultant to edit
-- **Progression**: Click add/edit → Form opens with consultant details and solution play metrics → Enter training completions and delivery hours for each play → System calculates skill levels (Apprentice <200hrs, Contributor 200-500hrs, Leader >500hrs) → Save → Dashboard updates with new data
-- **Success criteria**: Consultant data persists across sessions, skill levels calculate correctly, and changes reflect immediately in all views
+- **Progression**: Click add/edit → Form opens with consultant details including name, email, region, primary industry expertise, and additional industries → Enter training completions and delivery hours for each solution play → System calculates skill levels (Apprentice <200hrs, Contributor 200-500hrs, Leader >500hrs) → Save → Dashboard updates with new data
+- **Success criteria**: Consultant data persists across sessions, skill levels calculate correctly, primary industry displays prominently in consultant cards, and changes reflect immediately in all views
 
 ### Solution Play Skills Matrix
 - **Functionality**: Visual grid showing all consultants and their skill levels across all 18 solution plays
@@ -34,11 +34,11 @@ This dashboard aggregates multiple data sources (training records, delivery hour
 - **Success criteria**: Analytics calculate accurately from underlying data, charts render clearly, and provide meaningful insights for resource planning
 
 ### Search and Filter System
-- **Functionality**: Filter consultants by name, skill level, solution play, or minimum hours delivered
-- **Purpose**: Quickly locate consultants with specific capabilities for project staffing decisions
+- **Functionality**: Filter consultants by name, skill level, solution play, industry expertise (including primary industry), region, or minimum hours delivered
+- **Purpose**: Quickly locate consultants with specific capabilities and industry experience for project staffing decisions
 - **Trigger**: User types in search box or selects filter criteria
-- **Progression**: Enter search/filter criteria → Results update in real-time → Filtered consultants display in matrix and lists → Clear filters to return to full view
-- **Success criteria**: Search responds instantly (<100ms), supports multiple filter combinations, and clearly indicates active filters
+- **Progression**: Enter search/filter criteria → Results update in real-time → Filtered consultants display in matrix and lists → Primary industry prominently displayed on consultant cards → Clear filters to return to full view
+- **Success criteria**: Search responds instantly (<100ms), supports multiple filter combinations, clearly indicates active filters, and highlights primary industry expertise in results
 
 ### Hours Submission Form
 - **Functionality**: Structured form for team members to submit their solution area assignment, implemented solution plays, and hours delivered

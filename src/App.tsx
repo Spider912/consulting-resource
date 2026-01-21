@@ -96,6 +96,8 @@ function App() {
       const shuffledIndustries = [...INDUSTRIES].sort(() => Math.random() - 0.5)
       const industries = shuffledIndustries.slice(0, numIndustries) as Industry[]
       
+      const primaryIndustry = INDUSTRIES[index % INDUSTRIES.length] as Industry
+      
       const region = REGIONS[index % REGIONS.length] as Region
       
       const solutionPlays: Record<string, any> = {}
@@ -119,6 +121,7 @@ function App() {
         name: person.name,
         email: person.email,
         industries,
+        primaryIndustry,
         region,
         solutionPlays
       }

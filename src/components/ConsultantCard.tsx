@@ -92,11 +92,23 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
             </div>
           )}
 
+          {consultant.primaryIndustry && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Briefcase className="h-4 w-4 text-muted-foreground" weight="duotone" />
+                <span className="text-sm font-medium">Primary Industry Expertise</span>
+              </div>
+              <Badge variant="default" className="text-xs font-semibold">
+                {consultant.primaryIndustry}
+              </Badge>
+            </div>
+          )}
+
           {consultant.industries && consultant.industries.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Briefcase className="h-4 w-4 text-muted-foreground" weight="duotone" />
-                <span className="text-sm font-medium">Industry Experience</span>
+                <span className="text-sm font-medium">Additional Industry Experience</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {consultant.industries.map(industry => (
