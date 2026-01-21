@@ -1,6 +1,6 @@
 import { Consultant, getSkillLevel } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Clock, GraduationCap, Trophy } from "@phosphor-icons/react"
+import { Users, Clock, GraduationCap, Trophy, Presentation, Article } from "@phosphor-icons/react"
 
 interface OverviewMetricsProps {
   consultants: Consultant[]
@@ -19,6 +19,20 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
   const totalTraining = consultants.reduce((sum, consultant) => {
     return sum + Object.values(consultant.solutionPlays).reduce(
       (playSum, data) => playSum + data.trainingCompleted,
+      0
+    )
+  }, 0)
+
+  const totalPreSalesHours = consultants.reduce((sum, consultant) => {
+    return sum + Object.values(consultant.solutionPlays).reduce(
+      (playSum, data) => playSum + (data.preSalesHours || 0),
+      0
+    )
+  }, 0)
+
+  const totalArticles = consultants.reduce((sum, consultant) => {
+    return sum + Object.values(consultant.solutionPlays).reduce(
+      (playSum, data) => playSum + (data.articlesPosted || 0),
       0
     )
   }, 0)
@@ -43,6 +57,18 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
       color: "text-accent"
     },
     {
+      title: "Pre-Sales Hours",
+      value: totalPreSalesHours.toLocaleString(),
+      icon: Presentation,
+      color: "text-purple-500"
+    },
+    {
+      title: "Articles Posted",
+      value: totalArticles.toLocaleString(),
+      icon: Article,
+      color: "text-orange-500"
+    },
+    {
       title: "Training Completed",
       value: totalTraining.toLocaleString(),
       icon: GraduationCap,
@@ -57,7 +83,7 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {metrics.map((metric) => {
         const Icon = metric.icon
         return (

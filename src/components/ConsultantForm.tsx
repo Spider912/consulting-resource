@@ -56,6 +56,8 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
         [play]: {
           trainingCompleted: prev.solutionPlays[play]?.trainingCompleted || 0,
           hoursDelivered: prev.solutionPlays[play]?.hoursDelivered || 0,
+          preSalesHours: prev.solutionPlays[play]?.preSalesHours || 0,
+          articlesPosted: prev.solutionPlays[play]?.articlesPosted || 0,
           [field]: numValue,
         },
       },
@@ -134,6 +136,36 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                             value={formData.solutionPlays[play]?.hoursDelivered || 0}
                             onChange={(e) =>
                               updateSolutionPlay(play, "hoursDelivered", e.target.value)
+                            }
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`${play}-presales`} className="text-xs">
+                            Pre-Sales Hours
+                          </Label>
+                          <Input
+                            id={`${play}-presales`}
+                            type="number"
+                            min="0"
+                            value={formData.solutionPlays[play]?.preSalesHours || 0}
+                            onChange={(e) =>
+                              updateSolutionPlay(play, "preSalesHours", e.target.value)
+                            }
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`${play}-articles`} className="text-xs">
+                            Articles Posted
+                          </Label>
+                          <Input
+                            id={`${play}-articles`}
+                            type="number"
+                            min="0"
+                            value={formData.solutionPlays[play]?.articlesPosted || 0}
+                            onChange={(e) =>
+                              updateSolutionPlay(play, "articlesPosted", e.target.value)
                             }
                             className="mt-1"
                           />

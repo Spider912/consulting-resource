@@ -25,6 +25,8 @@ export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 export interface SolutionPlayData {
   trainingCompleted: number
   hoursDelivered: number
+  preSalesHours: number
+  articlesPosted: number
 }
 
 export interface Consultant {
