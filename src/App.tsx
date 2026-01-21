@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useKV } from "@github/spark/hooks"
-import { Consultant, Industry, INDUSTRIES, Region, REGIONS, SOLUTION_PLAYS } from "@/lib/types"
+import { Consultant, Industry, INDUSTRIES, Region, REGIONS, SOLUTION_PLAYS, SolutionPlay, SOLUTION_AREAS, SolutionArea } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -29,8 +29,12 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedIndustries, setSelectedIndustries] = useState<Industry[]>([])
   const [selectedRegions, setSelectedRegions] = useState<Region[]>([])
+  const [selectedSolutionPlays, setSelectedSolutionPlays] = useState<SolutionPlay[]>([])
+  const [selectedSolutionAreas, setSelectedSolutionAreas] = useState<SolutionArea[]>([])
   const [isIndustryFilterOpen, setIsIndustryFilterOpen] = useState(false)
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false)
+  const [isSolutionPlayFilterOpen, setIsSolutionPlayFilterOpen] = useState(false)
+  const [isSolutionAreaFilterOpen, setIsSolutionAreaFilterOpen] = useState(false)
   const [user, setUser] = useState<{ login: string; avatarUrl: string; email: string } | null>(null)
 
   const consultantsList = consultants || []
@@ -103,6 +107,30 @@ function App() {
     setSelectedRegions([])
   }
 
+  const toggleSolutionPlayFilter = (play: SolutionPlay) => {
+    setSelectedSolutionPlays(prev =>
+      prev.includes(play)
+        ? prev.filter(p => p !== play)
+        : [...prev, play]
+    )
+  }
+
+  const clearSolutionPlayFilters = () => {
+    setSelectedSolutionPlays([])
+  }
+
+  const toggleSolutionAreaFilter = (area: SolutionArea) => {
+    setSelectedSolutionAreas(prev =>
+      prev.includes(area)
+        ? prev.filter(a => a !== area)
+        : [...prev, area]
+    )
+  }
+
+  const clearSolutionAreaFilters = () => {
+    setSelectedSolutionAreas([])
+  }
+
   const filteredConsultants = consultantsList.filter(consultant => {
     const matchesSearch =
       consultant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -117,7 +145,48 @@ function App() {
       selectedRegions.length === 0 ||
       (consultant.region && selectedRegions.includes(consultant.region))
 
-    return matchesSearch && matchesIndustry && matchesRegion
+    const matchesSolutionPlay =
+      selectedSolutionPlays.length === 0 ||
+      selectedSolutionPlays.some(play => 
+        consultant.solutionPlays[play] && consultant.solutionPlays[play].hoursDelivered > 0
+      )
+
+    const solutionAreaToPlaysMap: Record<SolutionArea, SolutionPlay[]> = {
+      "Cloud and AI Platform": [
+        "Migrate and Modernize your Estate",
+        "Innovate with Azure",
+        "Unify Your Data Platform",
+        "Scale with Cloud and AI Endpoints"
+      ] as SolutionPlay[],
+      "AI Business Solutions": [
+        "AI Apps and Agents",
+        "Copilot and Agents at Work",
+        "Innovate with Low Code AI and Agents",
+        "Sales Transformation with AI",
+        "Service Transformation with AI",
+        "ERP Transformation with AI",
+        "Scale Business Operations with AI",
+        "AI Ready with Surface Copilot PCs"
+      ] as SolutionPlay[],
+      "Security": [
+        "Secure AI Productivity",
+        "Modern SecOps with Unified Platform",
+        "Data Security",
+        "Protect Cloud AI Platform and Apps",
+        "Converged Communications"
+      ] as SolutionPlay[]
+    }
+
+    const matchesSolutionArea =
+      selectedSolutionAreas.length === 0 ||
+      selectedSolutionAreas.some(area => {
+        const relatedPlays = solutionAreaToPlaysMap[area]
+        return relatedPlays.some(play =>
+          consultant.solutionPlays[play] && consultant.solutionPlays[play].hoursDelivered > 0
+        )
+      })
+
+    return matchesSearch && matchesIndustry && matchesRegion && matchesSolutionPlay && matchesSolutionArea
   })
 
   return (
@@ -271,12 +340,108 @@ function App() {
                 </PopoverContent>
               </Popover>
 
+              <Popover open={isSolutionPlayFilterOpen} onOpenChange={setIsSolutionPlayFilterOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <Funnel className="h-4 w-4" />
+                    Solution Play
+                    {selectedSolutionPlays.length > 0 && (
+                      <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center rounded-full">
+                        {selectedSolutionPlays.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 max-h-96 overflow-y-auto" align="start">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-sm">Filter by Solution Play</h4>
+                      {selectedSolutionPlays.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearSolutionPlayFilters}
+                          className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear all
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {SOLUTION_PLAYS.map((play) => (
+                        <div key={play} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`play-${play}`}
+                            checked={selectedSolutionPlays.includes(play)}
+                            onCheckedChange={() => toggleSolutionPlayFilter(play)}
+                          />
+                          <Label
+                            htmlFor={`play-${play}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {play}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <Popover open={isSolutionAreaFilterOpen} onOpenChange={setIsSolutionAreaFilterOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <Funnel className="h-4 w-4" />
+                    Solution Area
+                    {selectedSolutionAreas.length > 0 && (
+                      <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center rounded-full">
+                        {selectedSolutionAreas.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64" align="start">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-sm">Filter by Solution Area</h4>
+                      {selectedSolutionAreas.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearSolutionAreaFilters}
+                          className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear all
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {SOLUTION_AREAS.map((area) => (
+                        <div key={area} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`area-${area}`}
+                            checked={selectedSolutionAreas.includes(area)}
+                            onCheckedChange={() => toggleSolutionAreaFilter(area)}
+                          />
+                          <Label
+                            htmlFor={`area-${area}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {area}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
               <div className="text-sm text-muted-foreground">
                 {filteredConsultants.length} of {consultantsList.length} consultants
               </div>
             </div>
 
-            {(selectedIndustries.length > 0 || selectedRegions.length > 0) && (
+            {(selectedIndustries.length > 0 || selectedRegions.length > 0 || selectedSolutionPlays.length > 0 || selectedSolutionAreas.length > 0) && (
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm text-muted-foreground">Active filters:</span>
                 {selectedIndustries.map((industry) => (
@@ -300,6 +465,32 @@ function App() {
                       size="icon"
                       className="h-4 w-4 p-0 hover:bg-transparent"
                       onClick={() => toggleRegionFilter(region)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))}
+                {selectedSolutionPlays.map((play) => (
+                  <Badge key={play} variant="secondary" className="gap-1 pl-3 pr-2">
+                    {play}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-4 w-4 p-0 hover:bg-transparent"
+                      onClick={() => toggleSolutionPlayFilter(play)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))}
+                {selectedSolutionAreas.map((area) => (
+                  <Badge key={area} variant="secondary" className="gap-1 pl-3 pr-2">
+                    {area}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-4 w-4 p-0 hover:bg-transparent"
+                      onClick={() => toggleSolutionAreaFilter(area)}
                     >
                       <X className="h-3 w-3" />
                     </Button>

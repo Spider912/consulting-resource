@@ -36,9 +36,16 @@ export const REGIONS = [
   "Asia"
 ] as const
 
+export const SOLUTION_AREAS = [
+  "Cloud and AI Platform",
+  "AI Business Solutions",
+  "Security"
+] as const
+
 export type SolutionPlay = typeof SOLUTION_PLAYS[number]
 export type Industry = typeof INDUSTRIES[number]
 export type Region = typeof REGIONS[number]
+export type SolutionArea = typeof SOLUTION_AREAS[number]
 
 export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 
