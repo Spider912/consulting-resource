@@ -16,14 +16,14 @@ This dashboard aggregates multiple data sources (training records, delivery hour
 - **Functionality**: Add, edit, and manage consultant profiles with their training and delivery data across 18 solution plays
 - **Purpose**: Maintain accurate records of team capabilities and track individual consultant growth
 - **Trigger**: User clicks "Add Consultant" button or selects existing consultant to edit
-- **Progression**: Click add/edit → Form opens with consultant details and solution play metrics → Enter training completions and delivery hours for each play → System calculates skill levels (Beginner <200hrs, Collaborator 200-500hrs, Lead >500hrs) → Save → Dashboard updates with new data
+- **Progression**: Click add/edit → Form opens with consultant details and solution play metrics → Enter training completions and delivery hours for each play → System calculates skill levels (Apprentice <200hrs, Contributor 200-500hrs, Leader >500hrs) → Save → Dashboard updates with new data
 - **Success criteria**: Consultant data persists across sessions, skill levels calculate correctly, and changes reflect immediately in all views
 
 ### Solution Play Skills Matrix
 - **Functionality**: Visual grid showing all consultants and their skill levels across all 18 solution plays
 - **Purpose**: Provide at-a-glance view of team capability distribution to identify skill gaps and strengths
 - **Trigger**: Default view on dashboard load
-- **Progression**: Dashboard loads → Matrix displays with consultants as rows and solution plays as columns → Color-coded badges indicate skill levels (Beginner/Collaborator/Lead) → User can click cells for detailed metrics → Hovering shows training completion and hours delivered
+- **Progression**: Dashboard loads → Matrix displays with consultants as rows and solution plays as columns → Color-coded badges indicate skill levels (Apprentice/Contributor/Leader) → User can click cells for detailed metrics → Hovering shows training completion and hours delivered
 - **Success criteria**: Matrix loads instantly, clearly differentiates skill levels through visual design, and allows quick scanning of hundreds of data points
 
 ### Solution Play Analytics
@@ -65,7 +65,7 @@ A professional color scheme that leverages Microsoft brand associations while ma
   - Secondary (Cool Gray oklch(0.65 0.01 250)): White text (oklch(1 0 0)) - Ratio 4.7:1 ✓
   - Accent (Vibrant Teal oklch(0.65 0.15 195)): White text (oklch(1 0 0)) - Ratio 4.8:1 ✓
   - Background (Soft Blue-Gray oklch(0.97 0.005 250)): Dark text (oklch(0.25 0.02 250)) - Ratio 12.8:1 ✓
-  - Skill Level Badges: Beginner (Amber oklch(0.75 0.15 75) on White), Collaborator (Blue oklch(0.55 0.15 250) on White), Lead (Emerald oklch(0.55 0.15 155) on White) - All ratio >4.5:1 ✓
+  - Skill Level Badges: Apprentice (Amber oklch(0.75 0.15 75) on White), Contributor (Blue oklch(0.55 0.15 250) on White), Leader (Emerald oklch(0.55 0.15 155) on White) - All ratio >4.5:1 ✓
 
 ## Font Selection
 

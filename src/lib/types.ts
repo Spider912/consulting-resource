@@ -20,7 +20,7 @@ export const SOLUTION_PLAYS = [
 
 export type SolutionPlay = typeof SOLUTION_PLAYS[number]
 
-export type SkillLevel = "Beginner" | "Collaborator" | "Lead" | "Not Started"
+export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 
 export interface SolutionPlayData {
   trainingCompleted: number
@@ -37,18 +37,18 @@ export interface Consultant {
 
 export function getSkillLevel(hours: number): SkillLevel {
   if (hours === 0) return "Not Started"
-  if (hours < 200) return "Beginner"
-  if (hours < 500) return "Collaborator"
-  return "Lead"
+  if (hours < 200) return "Apprentice"
+  if (hours < 500) return "Contributor"
+  return "Leader"
 }
 
 export function getSkillLevelColor(level: SkillLevel): string {
   switch (level) {
-    case "Lead":
+    case "Leader":
       return "bg-emerald-500 text-white"
-    case "Collaborator":
+    case "Contributor":
       return "bg-blue-500 text-white"
-    case "Beginner":
+    case "Apprentice":
       return "bg-amber-500 text-white"
     default:
       return "bg-gray-300 text-gray-600"

@@ -23,9 +23,9 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
     )
   }, 0)
 
-  const leadConsultants = consultants.filter(consultant => {
+  const leaderConsultants = consultants.filter(consultant => {
     return Object.values(consultant.solutionPlays).some(
-      data => getSkillLevel(data.hoursDelivered) === "Lead"
+      data => getSkillLevel(data.hoursDelivered) === "Leader"
     )
   }).length
 
@@ -49,8 +49,8 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
       color: "text-primary"
     },
     {
-      title: "Lead Level Consultants",
-      value: leadConsultants,
+      title: "Leader Level Consultants",
+      value: leaderConsultants,
       icon: Trophy,
       color: "text-emerald-500"
     }

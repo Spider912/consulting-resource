@@ -24,9 +24,9 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
     level: getSkillLevel(consultant.solutionPlays[play]?.hoursDelivered || 0)
   })).filter(s => s.level !== "Not Started")
 
-  const leadPlays = skillLevels.filter(s => s.level === "Lead")
-  const collaboratorPlays = skillLevels.filter(s => s.level === "Collaborator")
-  const beginnerPlays = skillLevels.filter(s => s.level === "Beginner")
+  const leaderPlays = skillLevels.filter(s => s.level === "Leader")
+  const contributorPlays = skillLevels.filter(s => s.level === "Contributor")
+  const apprenticePlays = skillLevels.filter(s => s.level === "Apprentice")
 
   const getInitials = (name: string) => {
     return name
@@ -82,52 +82,52 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
           
           {skillLevels.length > 0 ? (
             <div className="space-y-3">
-              {leadPlays.length > 0 && (
+              {leaderPlays.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge className={getSkillLevelColor("Lead")}>Lead</Badge>
-                    <span className="text-xs text-muted-foreground">({leadPlays.length})</span>
+                    <Badge className={getSkillLevelColor("Leader")}>Leader</Badge>
+                    <span className="text-xs text-muted-foreground">({leaderPlays.length})</span>
                   </div>
                   <div className="text-xs text-muted-foreground pl-1 space-y-1">
-                    {leadPlays.slice(0, 2).map(({ play, hours }) => (
+                    {leaderPlays.slice(0, 2).map(({ play, hours }) => (
                       <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
                     ))}
-                    {leadPlays.length > 2 && (
-                      <div className="italic">+ {leadPlays.length - 2} more</div>
+                    {leaderPlays.length > 2 && (
+                      <div className="italic">+ {leaderPlays.length - 2} more</div>
                     )}
                   </div>
                 </div>
               )}
               
-              {collaboratorPlays.length > 0 && (
+              {contributorPlays.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge className={getSkillLevelColor("Collaborator")}>Collaborator</Badge>
-                    <span className="text-xs text-muted-foreground">({collaboratorPlays.length})</span>
+                    <Badge className={getSkillLevelColor("Contributor")}>Contributor</Badge>
+                    <span className="text-xs text-muted-foreground">({contributorPlays.length})</span>
                   </div>
                   <div className="text-xs text-muted-foreground pl-1 space-y-1">
-                    {collaboratorPlays.slice(0, 2).map(({ play, hours }) => (
+                    {contributorPlays.slice(0, 2).map(({ play, hours }) => (
                       <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
                     ))}
-                    {collaboratorPlays.length > 2 && (
-                      <div className="italic">+ {collaboratorPlays.length - 2} more</div>
+                    {contributorPlays.length > 2 && (
+                      <div className="italic">+ {contributorPlays.length - 2} more</div>
                     )}
                   </div>
                 </div>
               )}
               
-              {beginnerPlays.length > 0 && (
+              {apprenticePlays.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge className={getSkillLevelColor("Beginner")}>Beginner</Badge>
-                    <span className="text-xs text-muted-foreground">({beginnerPlays.length})</span>
+                    <Badge className={getSkillLevelColor("Apprentice")}>Apprentice</Badge>
+                    <span className="text-xs text-muted-foreground">({apprenticePlays.length})</span>
                   </div>
                   <div className="text-xs text-muted-foreground pl-1 space-y-1">
-                    {beginnerPlays.slice(0, 2).map(({ play, hours }) => (
+                    {apprenticePlays.slice(0, 2).map(({ play, hours }) => (
                       <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
                     ))}
-                    {beginnerPlays.length > 2 && (
-                      <div className="italic">+ {beginnerPlays.length - 2} more</div>
+                    {apprenticePlays.length > 2 && (
+                      <div className="italic">+ {apprenticePlays.length - 2} more</div>
                     )}
                   </div>
                 </div>

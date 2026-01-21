@@ -94,15 +94,15 @@ export function SkillsMatrix({ consultants }: SkillsMatrixProps) {
           <span className="font-medium">Legend:</span>
           <div className="flex items-center gap-2">
             <Badge className="bg-emerald-500 text-white">L</Badge>
-            <span className="text-muted-foreground">Lead (500+ hrs)</span>
+            <span className="text-muted-foreground">Leader (500+ hrs)</span>
           </div>
           <div className="flex items-center gap-2">
             <Badge className="bg-blue-500 text-white">C</Badge>
-            <span className="text-muted-foreground">Collaborator (200-500 hrs)</span>
+            <span className="text-muted-foreground">Contributor (200-500 hrs)</span>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-amber-500 text-white">B</Badge>
-            <span className="text-muted-foreground">Beginner (&lt;200 hrs)</span>
+            <Badge className="bg-amber-500 text-white">A</Badge>
+            <span className="text-muted-foreground">Apprentice (&lt;200 hrs)</span>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="outline">—</Badge>

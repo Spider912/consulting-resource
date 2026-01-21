@@ -26,9 +26,9 @@ export function AnalyticsView({ consultants }: AnalyticsViewProps) {
     const totalTraining = consultantsWithSkill.reduce((sum, c) => sum + c.data.trainingCompleted, 0)
 
     const skillDistribution = {
-      Lead: consultantsWithSkill.filter(c => c.level === "Lead").length,
-      Collaborator: consultantsWithSkill.filter(c => c.level === "Collaborator").length,
-      Beginner: consultantsWithSkill.filter(c => c.level === "Beginner").length,
+      Leader: consultantsWithSkill.filter(c => c.level === "Leader").length,
+      Contributor: consultantsWithSkill.filter(c => c.level === "Contributor").length,
+      Apprentice: consultantsWithSkill.filter(c => c.level === "Apprentice").length,
     }
 
     return {
@@ -109,11 +109,11 @@ export function AnalyticsView({ consultants }: AnalyticsViewProps) {
 
         <Card>
           <CardHeader className="pb-3">
-            <div className="text-sm text-muted-foreground">Lead Level</div>
+            <div className="text-sm text-muted-foreground">Leader Level</div>
           </CardHeader>
           <CardContent>
             <div className="font-mono text-3xl font-bold text-emerald-500">
-              {analytics.skillDistribution.Lead}
+              {analytics.skillDistribution.Leader}
             </div>
           </CardContent>
         </Card>
@@ -122,11 +122,11 @@ export function AnalyticsView({ consultants }: AnalyticsViewProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Lead Level</CardTitle>
+            <CardTitle className="text-lg">Leader Level</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-emerald-500 mb-2">
-              {analytics.skillDistribution.Lead}
+              {analytics.skillDistribution.Leader}
             </div>
             <p className="text-sm text-muted-foreground">500+ hours delivered</p>
           </CardContent>
@@ -134,11 +134,11 @@ export function AnalyticsView({ consultants }: AnalyticsViewProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Collaborator Level</CardTitle>
+            <CardTitle className="text-lg">Contributor Level</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-blue-500 mb-2">
-              {analytics.skillDistribution.Collaborator}
+              {analytics.skillDistribution.Contributor}
             </div>
             <p className="text-sm text-muted-foreground">200-500 hours delivered</p>
           </CardContent>
@@ -146,11 +146,11 @@ export function AnalyticsView({ consultants }: AnalyticsViewProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Beginner Level</CardTitle>
+            <CardTitle className="text-lg">Apprentice Level</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-amber-500 mb-2">
-              {analytics.skillDistribution.Beginner}
+              {analytics.skillDistribution.Apprentice}
             </div>
             <p className="text-sm text-muted-foreground">&lt;200 hours delivered</p>
           </CardContent>
