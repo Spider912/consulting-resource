@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Consultant, SOLUTION_PLAYS, SolutionPlayData } from "@/lib/types"
+import { Consultant, SOLUTION_PLAYS, SolutionPlayData, INDUSTRIES, Industry } from "@/lib/types"
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
+import { Badge } from "@/components/ui/badge"
+import { X } from "@phosphor-icons/react"
 
 interface ConsultantFormProps {
   open: boolean
@@ -25,8 +27,10 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
     id: "",
     name: "",
     email: "",
+    industries: [],
     solutionPlays: {},
   })
+  const [selectedIndustry, setSelectedIndustry] = useState<string>("")
 
   useEffect(() => {
     if (consultant) {
@@ -36,6 +40,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
         id: Date.now().toString(),
         name: "",
         email: "",
+        industries: [],
         solutionPlays: {},
       })
     }
@@ -62,6 +67,23 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
           [field]: numValue,
         },
       },
+    }))
+  }
+
+  const addIndustry = (industry: Industry) => {
+    if (!formData.industries?.includes(industry)) {
+      setFormData(prev => ({
+        ...prev,
+        industries: [...(prev.industries || []), industry]
+      }))
+    }
+    setSelectedIndustry("")
+  }
+
+  const removeIndustry = (industry: Industry) => {
+    setFormData(prev => ({
+      ...prev,
+      industries: (prev.industries || []).filter(i => i !== industry)
     }))
   }
 
@@ -99,6 +121,49 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                     required
                     placeholder="john.doe@company.com"
                   />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="industries">Industry Experience</Label>
+                  <div className="flex gap-2">
+                    <select
+                      id="industries"
+                      value={selectedIndustry}
+                      onChange={(e) => setSelectedIndustry(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <option value="">Select an industry...</option>
+                      {INDUSTRIES.filter(ind => !formData.industries?.includes(ind)).map(industry => (
+                        <option key={industry} value={industry}>{industry}</option>
+                      ))}
+                    </select>
+                    <Button
+                      type="button"
+                      onClick={() => selectedIndustry && addIndustry(selectedIndustry as Industry)}
+                      disabled={!selectedIndustry}
+                      variant="secondary"
+                    >
+                      Add
+                    </Button>
+                  </div>
+                  {formData.industries && formData.industries.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.industries.map(industry => (
+                        <Badge key={industry} variant="secondary" className="gap-1 pl-3 pr-2">
+                          {industry}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-4 w-4 p-0 hover:bg-transparent"
+                            onClick={() => removeIndustry(industry)}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 

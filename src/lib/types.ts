@@ -18,7 +18,20 @@ export const SOLUTION_PLAYS = [
   "Scale Business Operations with AI"
 ] as const
 
+export const INDUSTRIES = [
+  "Banking",
+  "Manufacturing",
+  "Retail",
+  "Insurance",
+  "Professional Services",
+  "Government",
+  "Healthcare",
+  "Education",
+  "Defense"
+] as const
+
 export type SolutionPlay = typeof SOLUTION_PLAYS[number]
+export type Industry = typeof INDUSTRIES[number]
 
 export type SkillLevel = "Apprentice" | "Contributor" | "Leader" | "Not Started"
 
@@ -35,6 +48,7 @@ export interface Consultant {
   name: string
   email: string
   avatar?: string
+  industries?: Industry[]
   solutionPlays: Record<string, SolutionPlayData>
 }
 

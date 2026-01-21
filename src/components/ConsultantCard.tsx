@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Pencil, Trash } from "@phosphor-icons/react"
+import { Pencil, Trash, Briefcase } from "@phosphor-icons/react"
 import { getSkillLevelColor } from "@/lib/types"
 
 interface ConsultantCardProps {
@@ -79,6 +79,22 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
             <span className="text-sm font-medium">Total Hours Delivered</span>
             <span className="font-mono text-2xl font-bold text-primary">{totalHours}</span>
           </div>
+
+          {consultant.industries && consultant.industries.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Briefcase className="h-4 w-4 text-muted-foreground" weight="duotone" />
+                <span className="text-sm font-medium">Industry Experience</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {consultant.industries.map(industry => (
+                  <Badge key={industry} variant="outline" className="text-xs">
+                    {industry}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
           
           {skillLevels.length > 0 ? (
             <div className="space-y-3">
