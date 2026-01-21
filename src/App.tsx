@@ -10,7 +10,7 @@ import { SkillsMatrix } from "@/components/SkillsMatrix"
 import { AnalyticsView } from "@/components/AnalyticsView"
 import { OverviewMetrics } from "@/components/OverviewMetrics"
 import { CapabilitiesAssessment } from "@/components/CapabilitiesAssessment"
-import { Plus, MagnifyingGlass, ChartBar, Funnel, X, UsersThree } from "@phosphor-icons/react"
+import { Plus, MagnifyingGlass, ChartBar, Funnel, X } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -63,72 +63,6 @@ function App() {
   const handleAddNew = () => {
     setEditingConsultant(undefined)
     setIsFormOpen(true)
-  }
-
-  const generateSampleConsultants = () => {
-    const names = [
-      { name: "Michael Rodriguez", email: "michael.rodriguez@company.com" },
-      { name: "Emily Watson", email: "emily.watson@company.com" },
-      { name: "David Kim", email: "david.kim@company.com" },
-      { name: "Jessica Martinez", email: "jessica.martinez@company.com" },
-      { name: "Robert Johnson", email: "robert.johnson@company.com" },
-      { name: "Amanda Chen", email: "amanda.chen@company.com" },
-      { name: "Christopher Lee", email: "christopher.lee@company.com" },
-      { name: "Maria Garcia", email: "maria.garcia@company.com" },
-      { name: "James Wilson", email: "james.wilson@company.com" },
-      { name: "Lisa Anderson", email: "lisa.anderson@company.com" },
-      { name: "Daniel Brown", email: "daniel.brown@company.com" },
-      { name: "Patricia Taylor", email: "patricia.taylor@company.com" },
-      { name: "Matthew Davis", email: "matthew.davis@company.com" },
-      { name: "Jennifer White", email: "jennifer.white@company.com" },
-      { name: "Anthony Martin", email: "anthony.martin@company.com" },
-      { name: "Laura Thompson", email: "laura.thompson@company.com" },
-      { name: "Kevin Patel", email: "kevin.patel@company.com" },
-      { name: "Michelle Zhang", email: "michelle.zhang@company.com" },
-      { name: "Brian O'Connor", email: "brian.oconnor@company.com" },
-      { name: "Nicole Singh", email: "nicole.singh@company.com" }
-    ]
-
-    const newConsultants: Consultant[] = names.map((person, index) => {
-      const id = `consultant-${Date.now()}-${index}`
-      
-      const numIndustries = Math.floor(Math.random() * 3) + 2
-      const shuffledIndustries = [...INDUSTRIES].sort(() => Math.random() - 0.5)
-      const industries = shuffledIndustries.slice(0, numIndustries) as Industry[]
-      
-      const primaryIndustry = INDUSTRIES[index % INDUSTRIES.length] as Industry
-      
-      const region = REGIONS[index % REGIONS.length] as Region
-      
-      const solutionPlays: Record<string, any> = {}
-      SOLUTION_PLAYS.forEach((play) => {
-        const hasExperience = Math.random() > 0.3
-        const hoursDelivered = hasExperience 
-          ? Math.floor(Math.random() * 800) + 50
-          : Math.floor(Math.random() * 30)
-        
-        solutionPlays[play] = {
-          trainingCompleted: Math.floor(Math.random() * 10) + 2,
-          hoursDelivered,
-          preSalesHours: Math.floor(Math.random() * 150) + 10,
-          articlesPosted: Math.floor(Math.random() * 15) + 2,
-          certifications: Math.floor(Math.random() * 8) + 2
-        }
-      })
-
-      return {
-        id,
-        name: person.name,
-        email: person.email,
-        industries,
-        primaryIndustry,
-        region,
-        solutionPlays
-      }
-    })
-
-    setConsultants(current => [...(current || []), ...newConsultants])
-    toast.success(`Added ${newConsultants.length} consultant profiles`)
   }
 
   const toggleIndustryFilter = (industry: Industry) => {
@@ -187,10 +121,6 @@ function App() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button onClick={generateSampleConsultants} variant="outline" size="lg" className="gap-2">
-                <UsersThree className="h-5 w-5" />
-                Add 20 Profiles
-              </Button>
               <Button onClick={handleAddNew} size="lg" className="gap-2">
                 <Plus className="h-5 w-5" />
                 Add Consultant
