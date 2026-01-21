@@ -20,8 +20,13 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
 
   const skillLevels = SOLUTION_PLAYS.map(play => ({
     play,
+    hours: consultant.solutionPlays[play]?.hoursDelivered || 0,
     level: getSkillLevel(consultant.solutionPlays[play]?.hoursDelivered || 0)
   })).filter(s => s.level !== "Not Started")
+
+  const leadPlays = skillLevels.filter(s => s.level === "Lead")
+  const collaboratorPlays = skillLevels.filter(s => s.level === "Collaborator")
+  const beginnerPlays = skillLevels.filter(s => s.level === "Beginner")
 
   const getInitials = (name: string) => {
     return name
@@ -75,26 +80,64 @@ export function ConsultantCard({ consultant, onEdit, onDelete }: ConsultantCardP
             <span className="font-mono text-2xl font-bold text-primary">{totalHours}</span>
           </div>
           
-          <div>
-            <p className="text-sm font-medium mb-2">Active Solution Plays</p>
-            <div className="flex flex-wrap gap-2">
-              {skillLevels.length > 0 ? (
-                skillLevels.slice(0, 5).map(({ play, level }) => (
-                  <Badge
-                    key={play}
-                    className={getSkillLevelColor(level)}
-                  >
-                    {level}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-sm text-muted-foreground">No solution plays started</span>
+          {skillLevels.length > 0 ? (
+            <div className="space-y-3">
+              {leadPlays.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className={getSkillLevelColor("Lead")}>Lead</Badge>
+                    <span className="text-xs text-muted-foreground">({leadPlays.length})</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground pl-1 space-y-1">
+                    {leadPlays.slice(0, 2).map(({ play, hours }) => (
+                      <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
+                    ))}
+                    {leadPlays.length > 2 && (
+                      <div className="italic">+ {leadPlays.length - 2} more</div>
+                    )}
+                  </div>
+                </div>
               )}
-              {skillLevels.length > 5 && (
-                <Badge variant="outline">+{skillLevels.length - 5} more</Badge>
+              
+              {collaboratorPlays.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className={getSkillLevelColor("Collaborator")}>Collaborator</Badge>
+                    <span className="text-xs text-muted-foreground">({collaboratorPlays.length})</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground pl-1 space-y-1">
+                    {collaboratorPlays.slice(0, 2).map(({ play, hours }) => (
+                      <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
+                    ))}
+                    {collaboratorPlays.length > 2 && (
+                      <div className="italic">+ {collaboratorPlays.length - 2} more</div>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {beginnerPlays.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className={getSkillLevelColor("Beginner")}>Beginner</Badge>
+                    <span className="text-xs text-muted-foreground">({beginnerPlays.length})</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground pl-1 space-y-1">
+                    {beginnerPlays.slice(0, 2).map(({ play, hours }) => (
+                      <div key={play}>• {play} <span className="font-mono">({hours}h)</span></div>
+                    ))}
+                    {beginnerPlays.length > 2 && (
+                      <div className="italic">+ {beginnerPlays.length - 2} more</div>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
-          </div>
+          ) : (
+            <div className="text-sm text-muted-foreground text-center py-4">
+              No solution plays started
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
