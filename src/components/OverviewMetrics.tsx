@@ -67,7 +67,7 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
       color: "text-cyan-500"
     },
     {
-      title: "Training Completed",
+      title: "Training Hours Completed",
       value: totalTraining > 1 ? totalTraining.toLocaleString() : 1,
       icon: GraduationCap,
       color: "text-primary"
