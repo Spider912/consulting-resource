@@ -27,6 +27,7 @@ export interface SolutionPlayData {
   hoursDelivered: number
   preSalesHours: number
   articlesPosted: number
+  certifications: number
 }
 
 export interface Consultant {

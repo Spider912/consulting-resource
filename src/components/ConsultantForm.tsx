@@ -58,6 +58,7 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
           hoursDelivered: prev.solutionPlays[play]?.hoursDelivered || 0,
           preSalesHours: prev.solutionPlays[play]?.preSalesHours || 0,
           articlesPosted: prev.solutionPlays[play]?.articlesPosted || 0,
+          certifications: prev.solutionPlays[play]?.certifications || 0,
           [field]: numValue,
         },
       },
@@ -166,6 +167,21 @@ export function ConsultantForm({ open, onClose, onSave, consultant }: Consultant
                             value={formData.solutionPlays[play]?.articlesPosted || 0}
                             onChange={(e) =>
                               updateSolutionPlay(play, "articlesPosted", e.target.value)
+                            }
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`${play}-certifications`} className="text-xs">
+                            Certifications
+                          </Label>
+                          <Input
+                            id={`${play}-certifications`}
+                            type="number"
+                            min="0"
+                            value={formData.solutionPlays[play]?.certifications || 0}
+                            onChange={(e) =>
+                              updateSolutionPlay(play, "certifications", e.target.value)
                             }
                             className="mt-1"
                           />

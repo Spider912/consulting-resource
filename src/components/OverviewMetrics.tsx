@@ -1,6 +1,6 @@
 import { Consultant, getSkillLevel } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Clock, GraduationCap, Trophy, Presentation, Article } from "@phosphor-icons/react"
+import { Users, Clock, GraduationCap, Trophy, Presentation, Article, Certificate } from "@phosphor-icons/react"
 
 interface OverviewMetricsProps {
   consultants: Consultant[]
@@ -37,6 +37,13 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
     )
   }, 0)
 
+  const totalCertifications = consultants.reduce((sum, consultant) => {
+    return sum + Object.values(consultant.solutionPlays).reduce(
+      (playSum, data) => playSum + (data.certifications || 0),
+      0
+    )
+  }, 0)
+
   const leaderConsultants = consultants.filter(consultant => {
     return Object.values(consultant.solutionPlays).some(
       data => getSkillLevel(data.hoursDelivered) === "Leader"
@@ -67,6 +74,12 @@ export function OverviewMetrics({ consultants }: OverviewMetricsProps) {
       value: totalArticles.toLocaleString(),
       icon: Article,
       color: "text-orange-500"
+    },
+    {
+      title: "Certifications",
+      value: totalCertifications.toLocaleString(),
+      icon: Certificate,
+      color: "text-cyan-500"
     },
     {
       title: "Training Completed",
